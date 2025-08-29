@@ -13,6 +13,10 @@ public class WordRestController {
 
     private final WordService wordService;
 
+    /**
+     * REST controller endpoint to retrieve the word of the day along with its definitions
+      and parts of speech.
+     */
     @Operation(summary = "Get the word of the day with its definitions and parts of speech")
     @GetMapping("/wordOfTheDay")
     public WordResponse getWord() {

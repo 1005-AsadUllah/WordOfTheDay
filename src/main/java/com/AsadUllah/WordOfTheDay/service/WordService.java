@@ -29,6 +29,12 @@ public class WordService {
     private static final String Random_Word_URL = "https://random-word-api.herokuapp.com/word";
     private static final String Dictionary_API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
+    /**
+     * Returns today's word with definitions.
+     * Uses Caffeine cache to store the word for 24 hours.
+     *
+     * @return WordResponse containing the word and its definitions.
+     */
     @Cacheable(value = "wordOfTheDay", key = "'word'")
     public WordResponse getWord() {
         String word = fetchWord();
@@ -60,6 +66,12 @@ public class WordService {
         return new WordResponse(word, responses);
     }
 
+    /**
+     * Fetches a random word from the Random Word API.
+     * Ensures the word is not already present in the database.
+     *
+     * @return a unique random word as a String.
+     */
     private String fetchWord() {
         String word;
         while (true) {
