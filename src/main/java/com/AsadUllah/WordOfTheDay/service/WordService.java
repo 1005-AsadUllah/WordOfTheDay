@@ -9,11 +9,13 @@ import com.AsadUllah.WordOfTheDay.repository.WordRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class WordService {
     private static final String Random_Word_URL = "https://random-word-api.herokuapp.com/word";
     private static final String Dictionary_API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
+    @Cacheable(value = "wordOfTheDay", key = "'word'")
     public WordResponse getWord() {
         String word = fetchWord();
         List<Response> responses = new ArrayList<>();
