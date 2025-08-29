@@ -18,34 +18,32 @@ public class WordService {
     private static final String Random_Word_URL = "https://random-word-api.herokuapp.com/word";
     private static final String Dictionary_API_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
 
-    public <T>WordResponse<T> getWord() {
+    public WordResponse getWord() {
         String[] words = restTemplate.getForObject(Random_Word_URL, String[].class);
         String word = (words != null && words.length > 0) ? words[0] : "example";
 
-        List<T> responses = new ArrayList<>();
+        List<Response> responses = new ArrayList<>();
 
         try {
             String details = restTemplate.getForObject(Dictionary_API_URL + word, String.class);
             JsonNode node = objectMapper.readTree(details);
 
             JsonNode meanings = node.get(0).get("meanings");
-            for(var meaning : meanings) {
+            for (var meaning : meanings) {
                 String partOfSpeech = meaning.get("partOfSpeech").asText();
                 JsonNode definitions = meaning.get("definitions");
 
-                for(JsonNode def : definitions) {
+                for (JsonNode def : definitions) {
                     String definition = def.get("definition").asText();
-                    responses.add((T) new Response(definition, partOfSpeech) );
+                    responses.add(new Response(definition, partOfSpeech));
                 }
             }
-        }
-        catch (Exception e) {
-           responses.add((T) new Response( "No definition found", "N/A"));
+        } catch (Exception e) {
+            responses.add(new Response("No definition found", "N/A"));
 
         }
-        return new WordResponse<>(word, responses);
+        return new WordResponse(word, responses);
     }
-
 
 
 }

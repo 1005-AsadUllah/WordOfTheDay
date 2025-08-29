@@ -12,7 +12,7 @@ public class WordRestController {
 
     private final WordService wordService;
 
-    @GetMapping("/word")
+    @GetMapping("/wordOfTheDay")
     public WordResponse getWord() {
         return wordService.getWord();
     }

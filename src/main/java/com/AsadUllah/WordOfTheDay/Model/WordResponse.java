@@ -11,8 +11,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WordResponse<T> {
+public class WordResponse {
     private String word;
-    private List<T> responses;
+    private List<Response> responses;
 
 }
