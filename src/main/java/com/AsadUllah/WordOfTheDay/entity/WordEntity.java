@@ -14,8 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Word_History")
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class WordEntity {
 
     @Id
