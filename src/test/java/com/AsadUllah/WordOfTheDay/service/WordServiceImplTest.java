@@ -5,6 +5,7 @@ import com.AsadUllah.WordOfTheDay.Model.WordResponse;
 import com.AsadUllah.WordOfTheDay.entity.WordEntity;
 import com.AsadUllah.WordOfTheDay.mapper.WordMapper;
 import com.AsadUllah.WordOfTheDay.repository.WordRepository;
+import com.AsadUllah.WordOfTheDay.service.impl.WordServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class WordServiceTest {
+class WordServiceImplTest {
 
     @Mock
     private WordRepository wordRepository;
@@ -36,14 +37,14 @@ class WordServiceTest {
     private RestTemplate restTemplate;
 
     @InjectMocks
-    private WordService wordService;
+    private WordServiceImpl wordServiceImpl;
 
     @BeforeEach
     void setUp() {
         // Since RestTemplate and ObjectMapper are instantiated within the class,
         // we use ReflectionTestUtils to set the mocked instance.
-        ReflectionTestUtils.setField(wordService, "restTemplate", restTemplate);
-        ReflectionTestUtils.setField(wordService, "objectMapper", new ObjectMapper());
+        ReflectionTestUtils.setField(wordServiceImpl, "restTemplate", restTemplate);
+        ReflectionTestUtils.setField(wordServiceImpl, "objectMapper", new ObjectMapper());
     }
 
     @Test
@@ -75,7 +76,7 @@ class WordServiceTest {
         when(wordMapper.wordToWordEntity(any(Word.class))).thenReturn(new WordEntity());
 
         // When
-        WordResponse response = wordService.getWord();
+        WordResponse response = wordServiceImpl.getWord();
 
         // Then
         assertEquals(mockWord, response.getWord());
@@ -105,7 +106,7 @@ class WordServiceTest {
         when(wordRepository.findByWord(anyString())).thenReturn(Optional.empty());
 
         // When
-        WordResponse response = wordService.getWord();
+        WordResponse response = wordServiceImpl.getWord();
 
         // Then
         assertEquals(mockWord, response.getWord());
@@ -145,7 +146,7 @@ class WordServiceTest {
         when(wordMapper.wordToWordEntity(any(Word.class))).thenReturn(new WordEntity());
 
         // When
-        WordResponse response = wordService.getWord();
+        WordResponse response = wordServiceImpl.getWord();
 
         // Then
         assertEquals(uniqueWord, response.getWord());
