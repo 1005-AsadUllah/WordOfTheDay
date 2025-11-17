@@ -28,4 +28,21 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    UserDetailsService userDetailsService() {
+        UserDetails user1 = User
+                .withUsername("Asad")
+                .password("{noop}1005")
+                .roles("USER")
+                .build();
+
+        UserDetails user2 = User
+                .withUsername("ferdous")
+                .password("{noop}1005")
+                .roles("ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user1, user2);
+
+    }
+
 }
