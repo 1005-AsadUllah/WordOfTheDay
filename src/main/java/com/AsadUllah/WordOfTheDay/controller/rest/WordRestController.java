@@ -1,4 +1,4 @@
-package com.AsadUllah.WordOfTheDay.controller;
+package com.AsadUllah.WordOfTheDay.controller.rest;
 
 import com.AsadUllah.WordOfTheDay.Model.WordResponse;
 import com.AsadUllah.WordOfTheDay.service.WordService;
@@ -22,6 +22,11 @@ public class WordRestController {
     @GetMapping("/wordOfTheDay")
     public WordResponse getWord() {
         return wordService.getWord();
+    }
+
+    @GetMapping("/word")
+    public String word() {
+        return "Yes, you have access to the word endpoint!";
     }
 
     @Operation(summary = "User endpoint only accessible by users with USER role")
